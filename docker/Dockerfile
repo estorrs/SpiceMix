@@ -10,6 +10,9 @@ ENV PATH="/miniconda/bin:$PATH"
 COPY ./SpiceMix.yml /SpiceMix/SpiceMix.yml
 RUN conda env create --file /SpiceMix/SpiceMix.yml 
 
+# needs gurobi license to run
+COPY ./gurobi/gurobi.lic /opt/gurobi/gurobi.lic
+
 COPY . /
 
 ENV PATH="$PATH:/miniconda/envs/SpiceMix/bin:/miniconda/bin"
