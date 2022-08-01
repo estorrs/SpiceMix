@@ -233,7 +233,7 @@ def initializeMByKMeans(YTs, K, random_seed4kmeans=0):
 	kmeans = KMeans(
 		n_clusters=K,
 		random_state=random_seed4kmeans,
-		n_jobs=1,
+		#n_jobs=1,
 		n_init=n_init,
 		tol=1e-8,
 	).fit(YT)

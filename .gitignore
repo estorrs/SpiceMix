@@ -1,0 +1,4 @@
+analysis/
+gurobi.log
+SpiceMix/__pycache__
+*.swp
