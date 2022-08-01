@@ -2,3 +2,4 @@ analysis/
 gurobi.log
 SpiceMix/__pycache__
 *.swp
+notebooks/.ipynb_checkpoints
