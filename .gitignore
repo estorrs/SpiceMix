@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 analysis/
 gurobi.log
 SpiceMix/__pycache__
 *.swp
 notebooks/.ipynb_checkpoints
+=======
+gurobi/
+>>>>>>> 14bfb3e2c2844fb303ba078c7a0ac52e1ab941a9

@@ -50,7 +50,7 @@ dependencies:
   - graphtools=1.5.2=py_0
   - gst-plugins-base=1.14.5=h0935bb2_2
   - gstreamer=1.14.5=h36ae1b5_2
-  - gurobi=8.1.1=py37_0
+  - gurobi=9.5.2
   - h5py=3.1.0=nompi_py37h1e651dc_100
   - hdf5=1.10.6=nompi_h6a2412b_1114
   - icu=64.2=he1b5a44_1
@@ -119,6 +119,7 @@ dependencies:
   - mistune=0.8.4=py37h5e8e339_1003
   - mkl=2021.2.0=h726a3e6_389
   - mock=4.0.3=py37h89c1867_1
+  - mygene
   - natsort=7.1.1=pyhd8ed1ab_0
   - nbclassic=0.2.8=pyhd8ed1ab_0
   - nbclient=0.5.3=pyhd8ed1ab_0
