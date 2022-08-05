@@ -1,3 +1,65 @@
+## Instructions for running on compute1
+
+#### Generating a Gurobi license
+
+First, SpiceMix requires a free license to [gurobi](https://www.gurobi.com/). The easiest way to run gurobi on compute1 is with their container environment license. To get the license, go [here](https://www.gurobi.com/academia/academic-program-and-licenses/) and follow the instructions under `Web License Service for Container Environments Only`. Note: unfortunately for academic use you can only run 2 containers in parallel, this means you can only run two spicemix processes at a time.
+
+Next, go to the [web license portal](https://license.gurobi.com/manager/licenses), create a license, and download it. When downloaded, you should have a file called ``. Create a folder called `gurobi` in the root directory of SpiceMix and put the license inside it. This directory is where the Dockerfile looks for the gurobi license when building the SpiceMix image.
+
+#### Building the docker image
+
+First off, I would recommend building the docker image on your local machine or a server that is not compute1, as building docker images on there is a bit weird.
+
+You will also need a dockerhub account to push images to, if you don't have one you can sign up [here](https://hub.docker.com/).
+
+To build the docker image, run the following from the root directory of the repository. Be sure to replace `<USERNAME>` with your dockerhub username. Also, you can name and tag the image whatever you want but here I'm tagging it with the commit id from the original SpiceMix repo.
+
+```bash
+docker build -f docker/Dockerfile -t <USERNAME>/SpiceMix:75522de .
+```
+
+Once the image builds, push it to dockerhub by running the following. (You may need to run `docker login` first to log in to dockerhub).
+
+```bash
+docker push <USERNAME>/SpiceMix:75522de
+```
+
+#### Running on compute1
+
+###### Launching the jupyter notebook
+
+On compute1, once you have cloned the repo you'll need to modify `compute1/launch_notebook.sh`.
+
+- modify the `export LSF_DOCKER_VOLUMES` string to map whatever directories you need to map. This will require you changing `/home/estorrs` to `/home/<USERNAME>` where your compute1 username is <USERNAME>. Also, if you are not a part of the dinglab you will need to modify the paths to point to your labs storage1 allocation. Additionally, change the `LSF_DOCKER_PORTS` string to map a port besides 8181 (I like using 8181 and dont want to have to change it :)). To use a different port replace 8181 with a port between 8000-12000. For example, `LSF_DOCKER_PORTS='12345:8888'`.
+
+Once you have made those modifications, launch the jupyter notebook by running the script from the root of the repository.
+
+```bash
+bash compute1/launch_notebook.sh
+```
+
+To connect to the notebook from your browser you need to run a few steps. Notice the link that is output by the launch notebook command, it should look something like this `http://compute1-exec-199.ris.wustl.edu:8888/?token=c18c61acb19c4d0bb6c5de67fdb76c1b089bfde95f2f99e4`. Take note of what # host you are on (in this case I am on compute1-exec-199). In a seperate terminal on YOUR LOCAL MACHINE, run the following to map your local machine to compute1, where <PORT> is the port you replaced in `launch_notebook.sh`, <HOST> is the host the notebook is running on (for example compute1-exec-199), and <USERNAME> is your compute1 username.
+
+```bash
+ssh -L <PORT>:<HOST>:<PORT> -N <USERNAME>@compute1-client-1.ris.wustl.edu
+```
+
+Now, paste into your browser the following link the launch notebook command output, but replacing everthing before `/?token` with `localhost:<PORT>`, where <PORT> is the port you replaced in `launch_notebook.sh`. For example, my link would look something like `localhost:8181/?token=c18c61acb19c4d0bb6c5de67fdb76c1b089bfde95f2f99e4`.
+
+You should now be inside a running jupyter notebook.
+
+###### Running the notebooks
+
+There are three main notebooks:
+
+1. `notebooks/preprocess_inputs.ipynb`, which preprocesses visium ST data and formats it to SpiceMix input specifications.
+2. `notebooks/run_spicemix.ipynb`, which creates the bsub command to actually run spicemix.
+3. `notebooks/inspect_results_brca.ipynb`, which is an example script that parses SpiceMix output and maps it back onto the input ST datasets, along with some basic visualizations.
+
+
+# Original Documentation Below
+
+
 # We have updated our paper in biorxiv
 
 See https://www.biorxiv.org/content/10.1101/2020.11.29.383067v3
