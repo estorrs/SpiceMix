@@ -30,7 +30,7 @@ docker push <USERNAME>/SpiceMix:75522de
 
 On compute1, once you have cloned the repo you'll need to modify `compute1/launch_notebook.sh`.
 
-- modify the `export LSF_DOCKER_VOLUMES` string to map whatever directories you need to map. This will require you changing `/home/estorrs` to `/home/<USERNAME>` where your compute1 username is <USERNAME>. Also, if you are not a part of the dinglab you will need to modify the paths to point to your labs storage1 allocation. Additionally, change the `LSF_DOCKER_PORTS` string to map a port besides 8181 (I like using 8181 and dont want to have to change it :)). To use a different port replace 8181 with a port between 8000-12000. For example, `LSF_DOCKER_PORTS='12345:8888'`.
+- modify the `export LSF_DOCKER_VOLUMES` string to map whatever directories you need to map. This will require you changing `/home/estorrs` to `/home/<USERNAME>` where your compute1 username is <USERNAME>. Also, if you are not a part of the dinglab you will need to modify the paths to point to your labs storage1 allocation. Additionally, change the `LSF_DOCKER_PORTS` and `select` string to map a port besides 8181 (I like using 8181 and dont want to have to change it :)). To use a different port replace 8181 with a port between 8000-12000. For example, `LSF_DOCKER_PORTS='12345:8888'` and `select[gpuhost,mem>100GB,port12345=1]`.
 
 Once you have made those modifications, launch the jupyter notebook by running the script from the root of the repository.
 
